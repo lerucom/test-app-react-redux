@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Dropdown from "./Dropdown";
 import Header from "./Header";
 import RegistrationForm from "./RegistrationForm";
+import "./App.css";
 
 const menu = [
     {
@@ -21,7 +22,7 @@ const menu = [
 class App extends Component {
     render() {
         return (
-            <div>
+            <div className="container">
                 <div>
                     <RegistrationForm />
                 </div>
