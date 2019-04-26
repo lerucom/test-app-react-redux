@@ -20,9 +20,14 @@ const menu = [
 ];
 
 class App extends Component {
+    submit() {
+        console.log('submit btn pushed', this.testInput.value);
+    }
     render() {
         return (
             <div className="container">
+                <input type="text" placeholder="test" ref={(input) => this.testInput = input}/>
+                <button onClick={this.submit.bind(this)}>Submit</button>
                 <div>
                     <RegistrationForm />
                 </div>
