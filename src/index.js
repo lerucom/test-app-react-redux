@@ -4,12 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import {createStore} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
 
-const store = createStore(reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // store - хранилеще всех наших данных в приложении, любые данные мы тут храним
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk))); // store - хранилеще всех наших данных в приложении, любые данные мы тут храним
 
 ReactDOM.render(
     <Provider store={store}>

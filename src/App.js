@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux'; // декоратор
+import { connect } from 'react-redux'; // декоратор
+import { getTracks } from './actions/tracks';
 
 class App extends Component {
 
@@ -27,6 +28,9 @@ class App extends Component {
                     <input type="text" placeholder="search track" ref={(input) => { this.searchInput = input }} />
                     <button onClick={this.findTrack.bind(this)}>Find track</button>
                 </div>
+                <div>
+                    <button onClick={this.props.onGetTracks}>Get Tracks</button>
+                </div>
                 <ul>
                     {this.props.tracks.map((track, index) =>
                         <li key={index}>{track.name}</li>
@@ -51,6 +55,9 @@ export default connect(
         },
         onFindTrack: (name) => { // метод onFindTrack будет диспатчить новый эвент type: 'FIND_TRACK' и передавать name, который на вход передали
             dispatch({ type: 'FIND_TRACK', payload: name});
+        },
+        onGetTracks: () => {
+            dispatch(getTracks());
         }
     })
 )(App);
