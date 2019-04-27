@@ -23,7 +23,8 @@ function playlist(state = initialState, action) {
     return state;
 }
 
-const store = createStore(playlist); // store - хранилеще всех наших данных в приложении, любые данные мы тут храним
+const store = createStore(playlist,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // store - хранилеще всех наших данных в приложении, любые данные мы тут храним
 
 ReactDOM.render(
     <Provider store={store}>
