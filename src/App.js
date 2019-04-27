@@ -9,15 +9,27 @@ class App extends Component {
         this.trackInput.value = '';
     }
 
+    findTrack() {
+        console.log('findTrack', this.searchInput.value);
+        this.props.onFindTrack(this.searchInput.value);
+        this.searchInput.value = '';
+    }
+
     render() {
         console.log(this.props.tracks);
         return (
             <div>
-                <input type="text" placeholder="input track name" ref={(input) => { this.trackInput = input }} />
-                <button onClick={this.addTrack.bind(this)}>Add track</button>
+                <div>
+                    <input type="text" placeholder="add track name" ref={(input) => { this.trackInput = input }} />
+                    <button onClick={this.addTrack.bind(this)}>Add track</button>
+                </div>
+                <div>
+                    <input type="text" placeholder="search track" ref={(input) => { this.searchInput = input }} />
+                    <button onClick={this.findTrack.bind(this)}>Find track</button>
+                </div>
                 <ul>
                     {this.props.tracks.map((track, index) =>
-                        <li key={index}>{track}</li>
+                        <li key={index}>{track.name}</li>
                     )}
                 </ul>
             </div>
@@ -27,11 +39,18 @@ class App extends Component {
 
 export default connect(
     state => ({ // map state to props, легко подписываться на store и следить за изменениями
-        tracks: state.tracks // state глобальное состояние нашего store
+        tracks: state.tracks.filter((track) => track.name.includes(state.filterTracks)) // state глобальное состояние нашего store
     }),
     dispatch => ({
-        onAddTrack: (trackName) => { // теперь этот метод доступен через this.props
-            dispatch({ type: 'ADD_TRACK', payload: trackName });
+        onAddTrack: (name) => { // теперь этот метод доступен через this.props
+            const payload = {
+                id: Date.now().toString(),
+                name
+            };
+            dispatch({ type: 'ADD_TRACK', payload: payload });
+        },
+        onFindTrack: (name) => { // метод onFindTrack будет диспатчить новый эвент type: 'FIND_TRACK' и передавать name, который на вход передали
+            dispatch({ type: 'FIND_TRACK', payload: name});
         }
     })
 )(App);
