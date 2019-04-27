@@ -2,12 +2,19 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'; // декоратор
 
 class App extends Component {
+
+    addTrack() {
+        console.log('addTrack', this.trackInput.value);
+        this.props.onAddTrack(this.trackInput.value);
+        this.trackInput.value = '';
+    }
+
     render() {
         console.log(this.props.testStore);
         return (
             <div>
-                <input type="text" placeholder="input track name"/>
-                <button>Add track</button>
+                <input type="text" placeholder="input track name" ref={(input) => { this.trackInput = input }} />
+                <button onClick={this.addTrack.bind(this)}>Add track</button>
                 <ul>
                     {this.props.testStore.map((track, index) =>
                         <li key={index}>{track}</li>
@@ -22,7 +29,11 @@ export default connect(
     state => ({ // map state to props, легко подписываться на store и следить за изменениями
         testStore: state // state глобальное состояние нашего store
     }),
-    dispatch => ({}) //
+    dispatch => ({
+        onAddTrack: (trackName) => { // теперь этот метод доступен через this.props
+            dispatch({ type: 'ADD_TRACK', payload: trackName });
+        }
+    })
 )(App);
 
 
