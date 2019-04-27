@@ -3,18 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Route } from 'react-router-dom'; // Можно сделать перемещение между ссылками через NavLink
 
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
+import About from './About';
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk))); // store - хранилеще всех наших данных в приложении, любые данные мы тут храним
 
 ReactDOM.render(
     <Provider store={store}>
-    <App />
+        <BrowserRouter>
+            <Route exact path="/" component={App} />
+            <Route exact path="/about" component={About} />
+        </BrowserRouter>
     </Provider>,
     document.getElementById('root')
 );
