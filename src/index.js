@@ -6,24 +6,9 @@ import * as serviceWorker from './serviceWorker';
 
 import {createStore} from 'redux';
 import { Provider } from 'react-redux';
+import reducer from './reducers';
 
-const initialState = [
-    'Smells like spirit',
-    'Enter Sandman'
-];
-
-function playlist(state = initialState, action) {
-    console.log(action);
-    if (action.type === 'ADD_TRACK') {
-        return [ // создаем копию данных и добавляем action.payload
-            ...state,
-            action.payload
-        ];
-    }
-    return state;
-}
-
-const store = createStore(playlist,
+const store = createStore(reducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()); // store - хранилеще всех наших данных в приложении, любые данные мы тут храним
 
 ReactDOM.render(

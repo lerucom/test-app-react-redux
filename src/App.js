@@ -10,13 +10,13 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.props.testStore);
+        console.log(this.props.tracks);
         return (
             <div>
                 <input type="text" placeholder="input track name" ref={(input) => { this.trackInput = input }} />
                 <button onClick={this.addTrack.bind(this)}>Add track</button>
                 <ul>
-                    {this.props.testStore.map((track, index) =>
+                    {this.props.tracks.map((track, index) =>
                         <li key={index}>{track}</li>
                     )}
                 </ul>
@@ -27,7 +27,7 @@ class App extends Component {
 
 export default connect(
     state => ({ // map state to props, легко подписываться на store и следить за изменениями
-        testStore: state // state глобальное состояние нашего store
+        tracks: state.tracks // state глобальное состояние нашего store
     }),
     dispatch => ({
         onAddTrack: (trackName) => { // теперь этот метод доступен через this.props
